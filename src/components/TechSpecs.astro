@@ -8,7 +8,7 @@ import { TECH_SPECS } from '../data/techSpecs';
       <span class="section-tag">TECHNICAL ARCHITECTURE & SPECIFICATIONS</span>
       <h2 class="section-title">肯の基 Kendeji 线路与传输技术说明</h2>
       <p class="section-desc">
-        以下数据来源于第三方公开讨论与资料收集。本站对各项出境线路、传输协议及兼容性进行了客观分类与核验状态标注。
+        以下数据来源于第三方公开讨论与资料收集。本站对各项出境线路、传输协议及兼容性进行了客观分类。
       </p>
     </div>
 
@@ -28,20 +28,10 @@ import { TECH_SPECS } from '../data/techSpecs';
           <h3 class="tech-name font-serif">{spec.name}</h3>
           <p class="tech-desc">{spec.description}</p>
           <div class="tech-detail">
-            <strong>核验研判：</strong>{spec.detail}
+            <strong>技术特点：</strong>{spec.detail}
           </div>
         </div>
       ))}
-    </div>
-
-    <!-- Tech Disclaimer Footer Box -->
-    <div class="tech-disclaimer">
-      <h4 class="disclaimer-title font-serif">线路与服务功能核实声明</h4>
-      <p>
-        以上线路名称（CN2 GIA / 联通 9929 / 移动 CMIN2）及协议说明（VLESS-Reality / AnyTLS）仅代表公开第三方资料中提及的网络技术概念。
-        <strong>本站未经全量长时间节点测速与风控测试，坚决禁止虚构实测速度、真实延迟、节点数量、设备上限或保证 100% 流媒体解锁。</strong>
-        实际服务质量受限于用户本地宽带环境及服务平台动态节点调度策略。
-      </p>
     </div>
   </div>
 </section>
@@ -55,7 +45,6 @@ import { TECH_SPECS } from '../data/techSpecs';
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 2.5rem;
   }
 
   .tech-card {
@@ -132,24 +121,5 @@ import { TECH_SPECS } from '../data/techSpecs';
 
   .tech-detail strong {
     color: var(--color-cocoa);
-  }
-
-  .tech-disclaimer {
-    background-color: var(--color-apricot-light);
-    border: 2px dashed var(--color-cocoa);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-  }
-
-  .disclaimer-title {
-    font-size: 1.05rem;
-    color: var(--color-cocoa);
-    margin-bottom: 0.5rem;
-  }
-
-  .tech-disclaimer p {
-    font-size: 0.85rem;
-    color: var(--color-text-dark);
-    line-height: 1.55;
   }
 </style>

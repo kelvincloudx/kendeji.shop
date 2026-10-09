@@ -3,9 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import PlansTable from '../components/PlansTable.astro';
 import TechSpecs from '../components/TechSpecs.astro';
-import ArticleCard from '../components/ArticleCard.astro';
 import FAQSection from '../components/FAQSection.astro';
-import { ARTICLES } from '../data/articles';
 ---
 
 <Layout>
@@ -18,74 +16,6 @@ import { ARTICLES } from '../data/articles';
   <!-- Tech Specs Section -->
   <TechSpecs />
 
-  <!-- Magazine Editorial Articles / Guide Index Section -->
-  <section id="articles" class="section articles-section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">KENDEJI EDITORIAL MANUAL</span>
-        <h2 class="section-title">肯の基 Kendeji 使用与技术分析目录</h2>
-        <p class="section-desc">
-          汇集针对肯の基 7 档甜品套餐梯队推演、VLESS-Reality / AnyTLS 协议解构、sing-box TUN 模式配置及三大运营商骨干网路由匹配的 7 篇独立研究指南。
-        </p>
-      </div>
-
-      <!-- Editorial Table of Contents Layout -->
-      <div class="magazine-directory-box">
-        <div class="directory-header">
-          <span class="dir-col-label">序号 / 栏目类别 / 日期</span>
-          <span class="dir-col-label">指南标题与摘要说明</span>
-        </div>
-
-        <div class="directory-list">
-          {ARTICLES.map((article, index) => (
-            <ArticleCard article={article} index={index} />
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- FAQ Section -->
   <FAQSection />
 </Layout>
-
-<style>
-  .articles-section {
-    background-color: var(--bg-cream);
-  }
-
-  .magazine-directory-box {
-    background-color: var(--bg-card);
-    border: 2px solid var(--color-cocoa);
-    border-radius: var(--radius-md);
-    padding: 1.5rem 2rem;
-    box-shadow: var(--shadow-magazine-sm);
-  }
-
-  .directory-header {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 2rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--color-cocoa);
-    margin-bottom: 0.5rem;
-  }
-
-  .dir-col-label {
-    font-size: 0.78rem;
-    font-weight: 800;
-    color: var(--color-orange);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 768px) {
-    .magazine-directory-box {
-      padding: 1rem;
-    }
-
-    .directory-header {
-      display: none;
-    }
-  }
-</style>

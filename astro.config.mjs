@@ -8,16 +8,8 @@ function customSitemap() {
     name: 'kendeji-custom-sitemap',
     hooks: {
       'astro:build:done': async ({ dir }) => {
-        const site = 'https://kendeji.shop';
         const urls = [
-          'https://kendeji.shop/',
-          'https://kendeji.shop/articles/kendeji-pricing-structure-analysis/',
-          'https://kendeji.shop/articles/vless-reality-anytls-protocol-architecture/',
-          'https://kendeji.shop/articles/cross-platform-subscription-parser-guide/',
-          'https://kendeji.shop/articles/souffle-plan-traffic-quota-investigation/',
-          'https://kendeji.shop/articles/three-operator-routing-cn2-9929-cmin2/',
-          'https://kendeji.shop/articles/sing-box-tun-mode-windows-mac-linux/',
-          'https://kendeji.shop/articles/commercial-disclosure-and-authenticity-faq/'
+          'https://kendeji.shop/'
         ];
 
         const today = new Date().toISOString().split('T')[0];
@@ -27,7 +19,7 @@ ${urls.map(url => `  <url>
     <loc>${url}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${url === 'https://kendeji.shop/' ? '1.0' : '0.8'}</priority>
+    <priority>1.0</priority>
   </url>`).join('\n')}
 </urlset>`;
 
