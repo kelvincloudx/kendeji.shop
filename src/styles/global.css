@@ -1,0 +1,311 @@
+:root {
+  --bg-cream: #FFF8EC;
+  --bg-card: #FFFFFF;
+  --color-orange: #F28C45;
+  --color-orange-hover: #E07A33;
+  --color-cocoa: #49382F;
+  --color-cocoa-light: #6A5447;
+  --color-apricot: #F6DEB8;
+  --color-apricot-light: #FFF3E0;
+  --color-sage: #809C83;
+  --color-sage-light: #EBF2EC;
+  --color-text-dark: #302A26;
+  --color-text-muted: #6C635B;
+  --color-border: #E6DCCD;
+  --color-border-dark: #49382F;
+
+  --font-serif: "Georgia", "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  
+  --shadow-sm: 0 2px 8px rgba(73, 56, 47, 0.05);
+  --shadow-md: 0 4px 16px rgba(73, 56, 47, 0.08);
+  --shadow-magazine: 4px 4px 0px #49382F;
+  --shadow-magazine-sm: 2px 2px 0px #49382F;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-cream);
+  color: var(--color-text-dark);
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-cream);
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Typography Helpers */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.heading-magazine {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--color-cocoa);
+  letter-spacing: -0.01em;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-cocoa);
+}
+
+.badge-orange {
+  background-color: var(--color-orange);
+  color: #FFFFFF;
+  border-color: var(--color-cocoa);
+}
+
+.badge-sage {
+  background-color: var(--color-sage-light);
+  color: var(--color-cocoa);
+  border-color: var(--color-sage);
+}
+
+.badge-apricot {
+  background-color: var(--color-apricot);
+  color: var(--color-cocoa);
+  border-color: var(--color-cocoa);
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background-color: var(--color-orange);
+  color: #FFFFFF;
+  border: 2px solid var(--color-cocoa);
+  box-shadow: var(--shadow-magazine-sm);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-orange-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-magazine);
+}
+
+.btn-secondary {
+  background-color: var(--color-apricot);
+  color: var(--color-cocoa);
+  border: 2px solid var(--color-cocoa);
+  box-shadow: var(--shadow-magazine-sm);
+}
+
+.btn-secondary:hover {
+  background-color: #F2D2A2;
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-magazine);
+}
+
+.btn-outline {
+  background-color: var(--bg-card);
+  color: var(--color-cocoa);
+  border: 2px solid var(--color-cocoa);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-apricot-light);
+}
+
+/* Section Common Styling */
+.section {
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.section-header {
+  margin-bottom: 2.5rem;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-orange);
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  line-height: 1.25;
+  color: var(--color-cocoa);
+  font-family: var(--font-serif);
+}
+
+.section-desc {
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  max-width: 680px;
+}
+
+/* Table styling for article markdown content & specs */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.92rem;
+  background-color: #FFFFFF;
+  border: 2px solid var(--color-cocoa);
+  box-shadow: var(--shadow-magazine-sm);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.prose th {
+  background-color: var(--color-apricot);
+  color: var(--color-cocoa);
+  font-weight: 700;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--color-cocoa);
+  border-right: 1px solid var(--color-border);
+}
+
+.prose td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+}
+
+.prose tr:nth-child(even) {
+  background-color: var(--bg-cream);
+}
+
+.prose blockquote {
+  border-left: 4px solid var(--color-orange);
+  background-color: var(--color-apricot-light);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85em;
+  background-color: #F5EDE0;
+  color: var(--color-cocoa);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid #E0D4C2;
+}
+
+.prose pre {
+  background-color: var(--color-cocoa);
+  color: #FFF8EC;
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 2px solid var(--color-border-dark);
+}
+
+.prose pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  border: none;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-serif);
+  color: var(--color-cocoa);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  color: var(--color-text-dark);
+}
+
+.prose ul, .prose ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-bottom: 0.4rem;
+}
+
+.prose hr {
+  border: none;
+  border-top: 2px dashed var(--color-border);
+  margin: 2.5rem 0;
+}

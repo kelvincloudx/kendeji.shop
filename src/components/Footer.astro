@@ -1,0 +1,255 @@
+---
+import { AFFILIATE_URL, DISCLAIMER_TEXT } from '../data/plans';
+import { ARTICLES } from '../data/articles';
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <!-- Top Footer Columns -->
+    <div class="footer-grid">
+      <!-- Col 1: Brand Info -->
+      <div class="footer-col brand-col">
+        <h3 class="footer-brand font-serif">肯の基 Kendeji</h3>
+        <p class="brand-desc">
+          专注于肯の基套餐资料整理、线路传输技术研判与跨平台客户端订阅使用指南的独立单品牌落地页。
+        </p>
+        <div class="brand-tag-list">
+          <span class="foot-tag">日系编辑刊目</span>
+          <span class="foot-tag">透明合规披露</span>
+          <span class="foot-tag">单品牌聚焦</span>
+        </div>
+      </div>
+
+      <!-- Col 2: Site Navigation -->
+      <div class="footer-col">
+        <h4 class="col-title font-serif">站点导航</h4>
+        <ul class="footer-links">
+          <li><a href="/#plans">7档参考套餐</a></li>
+          <li><a href="/#tech">线路与技术说明</a></li>
+          <li><a href="/#articles">使用与订阅教程</a></li>
+          <li><a href="/#faq">常见问题 FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Guide Articles Links -->
+      <div class="footer-col">
+        <h4 class="col-title font-serif">精选知识指南</h4>
+        <ul class="footer-links">
+          {ARTICLES.slice(0, 4).map(art => (
+            <li><a href={`/articles/${art.slug}`}>{art.title}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Col 4: Commercial Disclosure -->
+      <div class="footer-col commercial-col">
+        <h4 class="col-title font-serif">推广平台入口</h4>
+        <p class="foot-aff-text">
+          全站商业注册与开通入口统一链接至指定第三方推广通道。
+        </p>
+        <a 
+          href={AFFILIATE_URL}
+          target="_blank" 
+          rel="sponsored nofollow noopener"
+          class="foot-aff-btn"
+        >
+          访问指定平台 (邀请码: HHoxxHGa)
+        </a>
+      </div>
+    </div>
+
+    <!-- Natural Links / Article Directory Cloud -->
+    <div class="footer-dir-cloud">
+      <span class="cloud-label">相关指南目录：</span>
+      <div class="cloud-links">
+        {ARTICLES.map(art => (
+          <a href={`/articles/${art.slug}`} class="cloud-link">{art.title}</a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Bottom Copyright & Disclaimer -->
+    <div class="footer-bottom">
+      <p class="disclaimer-footnote">
+        <strong>免责与客观性声明：</strong> {DISCLAIMER_TEXT}
+      </p>
+      <div class="copyright-row">
+        <span>&copy; {new Date().getFullYear()} 肯の基 Kendeji (kendeji.shop). All rights reserved.</span>
+        <span>静态技术栈：Astro + TypeScript</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-cocoa);
+    color: #FFF8EC;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+    border-top: 3px solid var(--color-orange);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 1.2fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand {
+    font-size: 1.6rem;
+    color: #FFF8EC;
+    margin-bottom: 0.75rem;
+  }
+
+  .brand-desc {
+    font-size: 0.88rem;
+    color: #E2D5C3;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .brand-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .foot-tag {
+    font-size: 0.72rem;
+    background-color: rgba(255, 248, 236, 0.1);
+    color: #FFF8EC;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 248, 236, 0.2);
+  }
+
+  .col-title {
+    font-size: 1.1rem;
+    color: var(--color-apricot);
+    margin-bottom: 1rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid rgba(255, 248, 236, 0.2);
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .footer-links a {
+    font-size: 0.88rem;
+    color: #E2D5C3;
+    transition: color 0.2s;
+    line-height: 1.4;
+  }
+
+  .footer-links a:hover {
+    color: var(--color-orange);
+  }
+
+  .foot-aff-text {
+    font-size: 0.82rem;
+    color: #E2D5C3;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .foot-aff-btn {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    background-color: var(--color-orange);
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s;
+    border: 1px solid var(--color-apricot);
+  }
+
+  .foot-aff-btn:hover {
+    background-color: var(--color-orange-hover);
+  }
+
+  /* Directory Cloud */
+  .footer-dir-cloud {
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 248, 236, 0.15);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .cloud-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-apricot);
+    margin-bottom: 0.65rem;
+  }
+
+  .cloud-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+  }
+
+  .cloud-link {
+    font-size: 0.8rem;
+    color: #E2D5C3;
+    transition: color 0.2s;
+  }
+
+  .cloud-link:hover {
+    color: var(--color-orange);
+    text-decoration: underline;
+  }
+
+  /* Bottom Copyright & Disclaimer */
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 248, 236, 0.2);
+    padding-top: 1.5rem;
+  }
+
+  .disclaimer-footnote {
+    font-size: 0.78rem;
+    color: #C2B5A3;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .disclaimer-footnote strong {
+    color: var(--color-apricot);
+  }
+
+  .copyright-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: #A29583;
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .copyright-row {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+  }
+</style>

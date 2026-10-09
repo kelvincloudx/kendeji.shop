@@ -1,0 +1,334 @@
+---
+import { AFFILIATE_URL } from '../data/plans';
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <!-- Brand Logo -->
+    <a href="/" class="brand-logo">
+      <span class="logo-kanji">肯の基</span>
+      <span class="logo-en">Kendeji</span>
+      <span class="logo-tag">ONLINE</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav" aria-label="桌面端主导航">
+      <ul class="nav-list">
+        <li><a href="/#plans" class="nav-link">套餐详情</a></li>
+        <li><a href="/#tech" class="nav-link">线路知识</a></li>
+        <li><a href="/#articles" class="nav-link">入门指南</a></li>
+        <li><a href="/#faq" class="nav-link">常见问题</a></li>
+      </ul>
+      <a 
+        href={AFFILIATE_URL}
+        target="_blank" 
+        rel="sponsored nofollow noopener"
+        class="btn btn-primary nav-cta"
+      >
+        订阅平台入口
+      </a>
+    </nav>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button id="mobileMenuBtn" class="mobile-toggle" aria-label="打开移动端导航菜单" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Drawer Menu (Hidden on desktop) -->
+  <div id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="drawer-content">
+      <div class="drawer-header">
+        <span class="drawer-title">肯の基 Kendeji</span>
+        <button id="closeDrawerBtn" class="close-btn" aria-label="关闭菜单">&times;</button>
+      </div>
+      <nav class="mobile-nav-list">
+        <a href="/#plans" class="drawer-link">套餐详情</a>
+        <a href="/#tech" class="drawer-link">线路知识</a>
+        <a href="/#articles" class="drawer-link">入门指南</a>
+        <a href="/#faq" class="drawer-link">常见问题 FAQ</a>
+        <div class="drawer-divider"></div>
+        <a 
+          href={AFFILIATE_URL}
+          target="_blank" 
+          rel="sponsored nofollow noopener"
+          class="btn btn-primary drawer-cta"
+        >
+          前往订阅平台入口
+        </a>
+        <p class="drawer-disclaimer">
+          提示：指定外部平台入口与肯の基套餐的对应关系尚待确认，请谨慎核验。
+        </p>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  const drawerLinks = document.querySelectorAll('.drawer-link, .drawer-cta');
+
+  function openMenu() {
+    if (mobileDrawer && mobileMenuBtn) {
+      mobileDrawer.classList.add('is-active');
+      mobileDrawer.setAttribute('aria-hidden', 'false');
+      mobileMenuBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeMenu() {
+    if (mobileDrawer && mobileMenuBtn) {
+      mobileDrawer.classList.remove('is-active');
+      mobileDrawer.setAttribute('aria-hidden', 'true');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  }
+
+  mobileMenuBtn?.addEventListener('click', openMenu);
+  closeDrawerBtn?.addEventListener('click', closeMenu);
+  drawerOverlay?.addEventListener('click', closeMenu);
+  drawerLinks.forEach(link => link.addEventListener('click', closeMenu));
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(255, 248, 236, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--color-cocoa);
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    color: var(--color-cocoa);
+  }
+
+  .logo-kanji {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .logo-en {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-orange);
+  }
+
+  .logo-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    background-color: var(--color-apricot);
+    color: var(--color-cocoa);
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    border: 1px solid var(--color-cocoa);
+  }
+
+  /* Desktop Nav */
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .nav-link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-cocoa);
+    position: relative;
+    padding-bottom: 0.2rem;
+    transition: color 0.2s;
+  }
+
+  .nav-link:hover {
+    color: var(--color-orange);
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--color-orange);
+    transition: width 0.2s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .nav-cta {
+    padding: 0.5rem 1.1rem;
+    font-size: 0.88rem;
+  }
+
+  /* Mobile Toggle */
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+
+  .mobile-toggle .bar {
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-cocoa);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Mobile Drawer */
+  .mobile-drawer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .mobile-drawer.is-active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .drawer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(48, 42, 38, 0.6);
+  }
+
+  .drawer-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80%;
+    max-width: 320px;
+    height: 100%;
+    background-color: var(--bg-cream);
+    border-left: 3px solid var(--color-cocoa);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-drawer.is-active .drawer-content {
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--color-cocoa);
+    margin-bottom: 1.5rem;
+  }
+
+  .drawer-title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-cocoa);
+  }
+
+  .close-btn {
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--color-cocoa);
+  }
+
+  .mobile-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .drawer-link {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-cocoa);
+    padding: 0.4rem 0;
+    border-bottom: 1px dashed var(--color-border);
+  }
+
+  .drawer-divider {
+    height: 1px;
+    background-color: var(--color-cocoa);
+    margin: 0.5rem 0;
+  }
+
+  .drawer-cta {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .drawer-disclaimer {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: 1rem;
+    line-height: 1.4;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 860px) {
+    .desktop-nav {
+      display: none;
+    }
+
+    .mobile-toggle {
+      display: flex;
+    }
+
+    .mobile-drawer {
+      display: block;
+    }
+  }
+</style>

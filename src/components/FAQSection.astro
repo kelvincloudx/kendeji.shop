@@ -1,0 +1,137 @@
+---
+import { FAQ_ITEMS } from '../data/faq';
+
+// Group FAQ items by category
+const categories = Array.from(new Set(FAQ_ITEMS.map(item => item.category)));
+---
+
+<section id="faq" class="section faq-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">FREQUENTLY ASKED QUESTIONS</span>
+      <h2 class="section-title">肯の基 Kendeji 常见问题解答 FAQ</h2>
+      <p class="section-desc">
+        收集关于肯の基套餐、推广平台对应关系、传输协议与客户端调优的最常见疑问，采用默认展开式透明呈现。
+      </p>
+    </div>
+
+    <div class="faq-categories-container">
+      {categories.map(cat => (
+        <div class="faq-category-block">
+          <h3 class="category-title font-serif">
+            <span class="title-decor">◆</span>
+            {cat}
+          </h3>
+
+          <div class="faq-list">
+            {FAQ_ITEMS.filter(item => item.category === cat).map((item, idx) => (
+              <div class="faq-item">
+                <h4 class="faq-question">
+                  <span class="q-badge">Q{idx + 1}</span>
+                  {item.question}
+                </h4>
+                <div class="faq-answer">
+                  <p>{item.answer}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    background-color: var(--bg-cream);
+  }
+
+  .faq-categories-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .faq-category-block {
+    background-color: var(--bg-card);
+    border: 2px solid var(--color-cocoa);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: var(--shadow-magazine-sm);
+  }
+
+  .category-title {
+    font-size: 1.3rem;
+    color: var(--color-cocoa);
+    border-bottom: 2px solid var(--color-cocoa);
+    padding-bottom: 0.65rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .title-decor {
+    color: var(--color-orange);
+    font-size: 0.9em;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .faq-item {
+    border-bottom: 1px dashed var(--color-border);
+    padding-bottom: 1.25rem;
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .faq-question {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-cocoa);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    line-height: 1.4;
+  }
+
+  .q-badge {
+    font-family: var(--font-serif);
+    font-size: 0.82rem;
+    font-weight: 800;
+    background-color: var(--color-orange);
+    color: #FFFFFF;
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-cocoa);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .faq-answer {
+    padding-left: 2.3rem;
+    font-size: 0.92rem;
+    color: var(--color-text-dark);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    .faq-category-block {
+      padding: 1.25rem;
+    }
+
+    .faq-answer {
+      padding-left: 0;
+      margin-top: 0.5rem;
+    }
+  }
+</style>

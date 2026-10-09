@@ -1,0 +1,157 @@
+---
+import type { Article } from '../data/articles';
+
+interface Props {
+  article: Article;
+  index: number;
+}
+
+const { article, index } = Astro.props;
+const formattedIndex = (index + 1).toString().padStart(2, '0');
+---
+
+<article class="magazine-article-item">
+  <div class="article-meta-col">
+    <span class="article-num">NO. {formattedIndex}</span>
+    <span class="article-cat">{article.category}</span>
+    <time class="article-date" datetime={article.date}>{article.date}</time>
+  </div>
+
+  <div class="article-main-col">
+    <h3 class="article-title font-serif">
+      <a href={`/articles/${article.slug}`}>{article.title}</a>
+    </h3>
+    <p class="article-summary">{article.summary}</p>
+    <div class="article-footer">
+      <span class="article-readtime">📖 {article.readTime}</span>
+      <a href={`/articles/${article.slug}`} class="article-read-btn">
+        <span>阅读全文</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .magazine-article-item {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 2rem;
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 2px dashed var(--color-border);
+    transition: background-color 0.2s ease;
+  }
+
+  .magazine-article-item:hover {
+    background-color: var(--color-apricot-light);
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .article-meta-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    border-right: 2px solid var(--color-cocoa);
+    padding-right: 1.5rem;
+  }
+
+  .article-num {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--color-orange);
+    letter-spacing: 0.05em;
+  }
+
+  .article-cat {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-cocoa);
+    background-color: var(--color-apricot);
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    border: 1px solid var(--color-cocoa);
+    display: inline-block;
+    align-self: flex-start;
+  }
+
+  .article-date {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+  }
+
+  .article-main-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-title {
+    font-size: 1.25rem;
+    line-height: 1.35;
+    color: var(--color-cocoa);
+    margin-bottom: 0.65rem;
+  }
+
+  .article-title a {
+    color: var(--color-cocoa);
+    transition: color 0.2s;
+  }
+
+  .article-title a:hover {
+    color: var(--color-orange);
+  }
+
+  .article-summary {
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .article-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+
+  .article-readtime {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .article-read-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-orange);
+    transition: transform 0.2s;
+  }
+
+  .article-read-btn:hover {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .magazine-article-item {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .article-meta-col {
+      border-right: none;
+      border-bottom: 1px solid var(--color-border);
+      padding-right: 0;
+      padding-bottom: 0.5rem;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+</style>

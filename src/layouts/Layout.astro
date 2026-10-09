@@ -1,0 +1,103 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  type?: string;
+}
+
+const {
+  title = "肯の基 Kendeji｜7款甜品参考套餐详情与订阅使用手册",
+  description = "独立整理肯の基（Kendeji）小块拿破仑、嘟嘟糕至舒芙蕾等 7 档公开参考套餐，提供 VLESS-Reality/AnyTLS 协议研判、sing-box TUN 模式与跨平台订阅使用教程。",
+  keywords = "肯の基, Kendeji, 肯の基套餐, 肯の基官网, 肯の基订阅, 小块拿破仑, 嘟嘟糕, 舒芙蕾, VLESS Reality, AnyTLS, sing-box",
+  canonicalUrl = Astro.url.href,
+  ogImage = "https://kendeji.shop/og-image.png",
+  type = "website"
+} = Astro.props;
+
+// Standard JSON-LD Schema Markup
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://kendeji.shop/#website",
+      "url": "https://kendeji.shop",
+      "name": "肯の基 Kendeji 独立落地页",
+      "description": description,
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "Product",
+      "@id": "https://kendeji.shop/#product-kendeji",
+      "name": "肯の基 Kendeji 网络加速套餐",
+      "brand": {
+        "@type": "Brand",
+        "name": "肯の基 Kendeji"
+      },
+      "description": "肯の基公开参考套餐矩阵，包含小块拿破仑、嘟嘟糕、大块嘟嘟糕、两块嘟嘟糕、两块半嘟嘟糕、司康饼及舒芙蕾 7 档规格。",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "CNY",
+        "lowPrice": "30",
+        "highPrice": "350",
+        "offerCount": "7"
+      }
+    }
+  ]
+};
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Primary Meta Tags -->
+  <title>{title}</title>
+  <meta name="title" content={title} />
+  <meta name="description" content={description} />
+  <meta name="keywords" content={keywords} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content={type} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={canonicalUrl} />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={ogImage} />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Preconnect Google Fonts for Editorial Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+</head>
+<body>
+  <Header />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>

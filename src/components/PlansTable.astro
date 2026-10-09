@@ -1,0 +1,499 @@
+---
+import { PLANS, OTHER_BILLING_CYCLES, AFFILIATE_URL, DISCLAIMER_TEXT } from '../data/plans';
+---
+
+<section id="plans" class="section plans-section">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="section-tag">PUBLIC REFERENCE PRICING</span>
+      <h2 class="section-title">肯の基 Kendeji 7档公开参考套餐明细</h2>
+      <p class="section-desc">
+        肯の基采用独特甜品命名分类。以下数据依据公开资料整理，按月度配额与公开年付参考金额全面解析。
+      </p>
+    </div>
+
+    <!-- Layout: Left Category Explanation & Filter, Right Detailed Table -->
+    <div class="plans-layout">
+      <!-- Left Overview & Filters -->
+      <div class="plans-sidebar">
+        <div class="sidebar-card">
+          <h3 class="sidebar-title font-serif">选购方案指导</h3>
+          <p class="sidebar-text">
+            肯の基套餐单 GB 边际单价保持在 ¥0.40/GB 上下，梯队划分极为规整。请根据您的月度流量需求快速筛选。
+          </p>
+
+          <!-- Interactive Filter Chips -->
+          <div class="filter-group">
+            <span class="filter-label">按流量配额筛选：</span>
+            <div class="filter-chips">
+              <button class="filter-btn active" data-filter="all">全部 (7款)</button>
+              <button class="filter-btn" data-filter="entry">入门 (75-100GB)</button>
+              <button class="filter-btn" data-filter="standard">进阶 (150-250GB)</button>
+              <button class="filter-btn" data-filter="pro">极客 (500GB+)</button>
+            </div>
+          </div>
+
+          <!-- Non-Monthly Billing Cycle Note -->
+          <div class="billing-note-box">
+            <h4 class="note-title">关于季付与半年付说明</h4>
+            <p class="note-desc">
+              {OTHER_BILLING_CYCLES.quarterly}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Main Pricing Table -->
+      <div class="plans-main">
+        <div class="table-container">
+          <table class="plans-table">
+            <thead>
+              <tr>
+                <th>套餐名称</th>
+                <th>月度流量配额</th>
+                <th>月付参考价</th>
+                <th>公开年付参考价</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {PLANS.map((plan) => (
+                <Fragment key={plan.id}>
+                  <tr class="plan-row" data-category={plan.category} data-id={plan.id}>
+                    <td>
+                      <div class="plan-name-cell">
+                        <strong class="plan-name">{plan.name}</strong>
+                        {plan.badge && <span class="badge badge-apricot">{plan.badge}</span>}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="traffic-cell">
+                        <span class="traffic-val">{plan.traffic}</span>
+                        {plan.quotaNote && <span class="quota-warning">{plan.quotaNote}</span>}
+                      </div>
+                    </td>
+                    <td>
+                      <span class="price-monthly">¥{plan.monthlyPrice} <small>/ 月</small></span>
+                    </td>
+                    <td>
+                      <span class="price-annual">¥{plan.annualReferencePrice} <small>/ 年参考</small></span>
+                    </td>
+                    <td>
+                      <div class="action-cell">
+                        <button class="btn-toggle-detail" data-target={`detail-${plan.id}`}>
+                          <span class="txt">查看细则</span>
+                          <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  {/* Expandable Row Detail */}
+                  <tr id={`detail-${plan.id}`} class="plan-detail-row is-hidden" data-category={plan.category}>
+                    <td colspan="5">
+                      <div class="detail-box">
+                        <p class="detail-desc">{plan.description}</p>
+                        <div class="detail-features">
+                          {plan.features.map((feat) => (
+                            <span class="feat-item">✓ {feat}</span>
+                          ))}
+                        </div>
+                        <div class="detail-footer">
+                          <span class="detail-note">公开折算系数：约 9.0 折 (按年付参考价)</span>
+                          <a 
+                            href={AFFILIATE_URL}
+                            target="_blank" 
+                            rel="sponsored nofollow noopener"
+                            class="btn btn-primary btn-sm"
+                          >
+                            前往推广平台核验购买
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Price Disclaimer Footer -->
+        <div class="table-disclaimer-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <p class="disclaimer-text">{DISCLAIMER_TEXT}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Filter functionality
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const planRows = document.querySelectorAll('.plan-row');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.getAttribute('data-filter');
+
+      planRows.forEach(row => {
+        const cat = row.getAttribute('data-category');
+        if (filter === 'all' || cat === filter) {
+          (row as HTMLElement).style.display = '';
+        } else {
+          (row as HTMLElement).style.display = 'none';
+          // Close detail if open
+          const id = row.getAttribute('data-id');
+          const detail = document.getElementById(`detail-${id}`);
+          if (detail) detail.classList.add('is-hidden');
+        }
+      });
+    });
+  });
+
+  // Toggle details
+  const toggleBtns = document.querySelectorAll('.btn-toggle-detail');
+  toggleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      if (!targetId) return;
+      const targetRow = document.getElementById(targetId);
+      if (targetRow) {
+        const isHidden = targetRow.classList.contains('is-hidden');
+        if (isHidden) {
+          targetRow.classList.remove('is-hidden');
+          btn.classList.add('is-open');
+        } else {
+          targetRow.classList.add('is-hidden');
+          btn.classList.remove('is-open');
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  .plans-section {
+    background-color: var(--bg-cream);
+  }
+
+  .plans-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  /* Left Sidebar Styling */
+  .sidebar-card {
+    background-color: var(--bg-card);
+    border: 2px solid var(--color-cocoa);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-magazine-sm);
+    position: sticky;
+    top: 5.5rem;
+  }
+
+  .sidebar-title {
+    font-size: 1.25rem;
+    color: var(--color-cocoa);
+    margin-bottom: 0.75rem;
+  }
+
+  .sidebar-text {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+
+  .filter-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-cocoa);
+    margin-bottom: 0.5rem;
+  }
+
+  .filter-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .filter-btn {
+    text-align: left;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-cocoa);
+    background-color: var(--bg-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--color-cocoa);
+  }
+
+  .filter-btn.active {
+    background-color: var(--color-cocoa);
+    color: #FFF8EC;
+    border-color: var(--color-cocoa);
+  }
+
+  .billing-note-box {
+    background-color: var(--color-apricot-light);
+    border: 1px dashed var(--color-cocoa);
+    padding: 0.85rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .note-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-cocoa);
+    margin-bottom: 0.25rem;
+  }
+
+  .note-desc {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  /* Right Main Table Styling */
+  .table-container {
+    background-color: var(--bg-card);
+    border: 2px solid var(--color-cocoa);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-magazine-sm);
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .plans-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  .plans-table th {
+    background-color: var(--color-apricot);
+    color: var(--color-cocoa);
+    font-weight: 700;
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 2px solid var(--color-cocoa);
+  }
+
+  .plans-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+  }
+
+  .plan-row:hover {
+    background-color: var(--color-apricot-light);
+  }
+
+  .plan-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .plan-name {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--color-cocoa);
+  }
+
+  .traffic-val {
+    font-weight: 700;
+    color: var(--color-cocoa);
+  }
+
+  .quota-warning {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--color-orange);
+    font-weight: 600;
+    margin-top: 0.15rem;
+  }
+
+  .price-monthly {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-orange);
+  }
+
+  .price-monthly small {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+  }
+
+  .price-annual {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-cocoa);
+  }
+
+  .price-annual small {
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+  }
+
+  .btn-toggle-detail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-cocoa);
+    background-color: var(--color-apricot);
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-cocoa);
+    transition: all 0.2s;
+  }
+
+  .btn-toggle-detail:hover {
+    background-color: var(--color-orange);
+    color: #FFFFFF;
+  }
+
+  .btn-toggle-detail .arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .btn-toggle-detail.is-open .arrow {
+    transform: rotate(180deg);
+  }
+
+  /* Detail Expandable Row */
+  .plan-detail-row.is-hidden {
+    display: none;
+  }
+
+  .detail-box {
+    background-color: var(--bg-cream);
+    padding: 1.25rem;
+    border-radius: var(--radius-sm);
+    border: 1.5px dashed var(--color-cocoa);
+  }
+
+  .detail-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-dark);
+    margin-bottom: 0.75rem;
+  }
+
+  .detail-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .feat-item {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-cocoa-light);
+  }
+
+  .detail-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .detail-note {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .btn-sm {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.82rem;
+  }
+
+  /* Table Disclaimer */
+  .table-disclaimer-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background-color: var(--color-apricot-light);
+    border: 1px solid var(--color-cocoa);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    color: var(--color-cocoa);
+  }
+
+  .table-disclaimer-box svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: var(--color-orange);
+  }
+
+  .disclaimer-text {
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 900px) {
+    .plans-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar-card {
+      position: static;
+    }
+
+    .plans-table th:nth-child(4),
+    .plans-table td:nth-child(4) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .plans-table, .plans-table tbody, .plans-table tr, .plans-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .plans-table thead {
+      display: none;
+    }
+
+    .plan-row {
+      border-bottom: 2px solid var(--color-cocoa);
+      padding: 1rem;
+    }
+
+    .plans-table td {
+      padding: 0.35rem 0;
+      border: none;
+    }
+
+    .detail-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+  }
+</style>

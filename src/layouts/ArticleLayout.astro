@@ -1,0 +1,259 @@
+---
+import Layout from './Layout.astro';
+import type { Article } from '../data/articles';
+import { AFFILIATE_URL, DISCLAIMER_TEXT } from '../data/plans';
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+
+// JSON-LD Article Schema
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": article.title,
+  "description": article.summary,
+  "datePublished": article.date,
+  "dateModified": article.date,
+  "author": {
+    "@type": "Organization",
+    "name": "肯の基 Kendeji 编委会"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "肯の基 Kendeji 独立落地页",
+    "url": "https://kendeji.shop"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": Astro.url.href
+  }
+};
+---
+
+<Layout 
+  title={`${article.title}｜肯の基 Kendeji 使用指南`}
+  description={article.summary}
+  type="article"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <article class="article-page section">
+    <div class="container-narrow">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs" aria-label="面包屑导航">
+        <a href="/">首页</a>
+        <span class="sep">/</span>
+        <a href="/#articles">入门指南</a>
+        <span class="sep">/</span>
+        <span class="current">{article.title}</span>
+      </nav>
+
+      <!-- Article Header -->
+      <header class="article-header">
+        <div class="article-meta-tags">
+          <span class="badge badge-orange">{article.category}</span>
+          <span class="meta-item">📅 发布日期：{article.date}</span>
+          <span class="meta-item">⏱️ {article.readTime}</span>
+        </div>
+
+        <h1 class="article-main-title font-serif">{article.title}</h1>
+        <p class="article-lead-text">{article.summary}</p>
+      </header>
+
+      <!-- Commercial Affiliate Callout Top Box -->
+      <div class="article-aff-callout">
+        <div class="callout-header">
+          <strong>肯の基 Kendeji 商业平台对应性说明</strong>
+          <span class="code-badge">邀请码: HHoxxHGa</span>
+        </div>
+        <p class="callout-desc">
+          在开始阅读前说明：全站指定推广入口属于第三方商业通道。本站与肯の基实际套餐的销售对应关系尚待确认，请在跳转平台后谨慎核验。
+        </p>
+        <a 
+          href={AFFILIATE_URL}
+          target="_blank" 
+          rel="sponsored nofollow noopener"
+          class="btn btn-primary btn-sm"
+        >
+          前往指定平台核验入口
+        </a>
+      </div>
+
+      <!-- Rendered Article Markdown HTML Slot -->
+      <div class="article-content prose">
+        <slot />
+      </div>
+
+      <!-- Article Bottom CTA & Disclaimers -->
+      <div class="article-footer-box">
+        <h3 class="foot-title font-serif">关于肯の基 Kendeji 信息的进一步核验</h3>
+        <p class="foot-desc">{DISCLAIMER_TEXT}</p>
+        <div class="foot-actions">
+          <a href="/#plans" class="btn btn-secondary">返回查看 7 档参考套餐</a>
+          <a 
+            href={AFFILIATE_URL}
+            target="_blank" 
+            rel="sponsored nofollow noopener"
+            class="btn btn-primary"
+          >
+            访问指定推广注册平台
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .article-page {
+    background-color: var(--bg-cream);
+    padding-top: 2.5rem;
+    padding-bottom: 5rem;
+  }
+
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .breadcrumbs a {
+    color: var(--color-cocoa);
+    font-weight: 600;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--color-orange);
+  }
+
+  .breadcrumbs .current {
+    color: var(--color-text-muted);
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .article-header {
+    border-bottom: 2px solid var(--color-cocoa);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .article-meta-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .meta-item {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+  }
+
+  .article-main-title {
+    font-size: 2.25rem;
+    line-height: 1.25;
+    color: var(--color-cocoa);
+    margin-bottom: 1rem;
+  }
+
+  .article-lead-text {
+    font-size: 1.1rem;
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    background-color: var(--color-apricot-light);
+    border-left: 4px solid var(--color-cocoa);
+    padding: 1rem 1.25rem;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  /* Commercial Callout Box */
+  .article-aff-callout {
+    background-color: var(--bg-card);
+    border: 2px solid var(--color-cocoa);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-magazine-sm);
+  }
+
+  .callout-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.92rem;
+    color: var(--color-cocoa);
+    margin-bottom: 0.5rem;
+  }
+
+  .code-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    background-color: var(--color-apricot);
+    color: var(--color-cocoa);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-cocoa);
+  }
+
+  .callout-desc {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    line-height: 1.45;
+    margin-bottom: 0.85rem;
+  }
+
+  /* Content Formatting */
+  .article-content {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-text-dark);
+
+    margin-bottom: 3.5rem;
+  }
+
+  /* Footer CTA Box */
+  .article-footer-box {
+    background-color: var(--bg-card);
+    border: 2px solid var(--color-cocoa);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-magazine-sm);
+  }
+
+  .foot-title {
+    font-size: 1.2rem;
+    color: var(--color-cocoa);
+    margin-bottom: 0.5rem;
+  }
+
+  .foot-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+
+  .foot-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .article-main-title {
+      font-size: 1.75rem;
+    }
+  }
+</style>
